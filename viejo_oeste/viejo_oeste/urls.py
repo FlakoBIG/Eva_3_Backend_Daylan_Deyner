@@ -20,9 +20,19 @@ from personajes import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
-    path('agregar/', views.agregar),
-    path('lista/', views.lista),
+    path('agregar/', views.agregar_vaquero),
+    path('lista/', views.lista_vaquero),
     path('eliminar/<int:id>', views.eliminar),
     path('actualizar/<int:id>', views.actualizar),
     path('prueba/>', views.prueba),
+
+    path('caballosos/',views.caballos),
+    path('agregar_caballo/',views.agregarcaballos),
+    path('eliminar_caballo/<int:id>',views.eliminar_caballo),
+    path('actualizar_caballo/<int:id>',views.actualizar_caballo),
+
+    path('arma/', views.arms),
+    path('agregar_arma/', views.agregararma),
+    path('eliminar_arma/<int:id>', views.eliminar_arma),
+    path('actualizar_arma/<int:id>', views.actualizar_arma),
 ]

@@ -7,25 +7,25 @@ from personajes.models import vaquero , arma,caballo
 def index(request):
     return render(request,'index.html')
 
-def lista(request):
+def lista_vaquero(request):
     vaqueros = vaquero.objects.all()
     data = {'vaqueros':vaqueros}
     return render(request,'lista.html',data)
 
-def agregar(request):
+def agregar_vaquero(request):
     form = Formvaquero()
     if request.method == 'POST':
         form = Formvaquero(request.POST)
         if form.is_valid():
             form.save()
-            return lista(request)
+            return lista_vaquero(request)
     data = {'form':form}
     return render(request,'agregar.html',data)
 
 def eliminar(request,id):
     P = vaquero.objects.get(id=id)
     P.delete()
-    return lista(request)
+    return lista_vaquero(request)
 
 def actualizar(request,id):
     P = vaquero.objects.get(id=id)
@@ -34,7 +34,7 @@ def actualizar(request,id):
         form = Formvaquero(request.POST,instance=P)
         if form.is_valid():
             form.save()
-            return lista(request)
+            return lista_vaquero(request)
     data={'form':form}
     return render(request,'modificar.html',data)
 
@@ -42,9 +42,6 @@ def prueba(request):
     return render(request,'prueba.html')
 
 #Arma
-
-def index(request):
-    return render(request,'index.html')
 
 def arms(request):
     armas=arma.objects.all()
@@ -58,14 +55,14 @@ def agregararma(request):
             form.save()
             return redirect('/arma')
     data = {'form': form}
-    return render(request, 'agregar.html', data)
+    return render(request, 'agregar_arma.html', data)
 
-def eliminar(request,id):
+def eliminar_arma(request,id):
     form=arma.objects.get(id=id)
     form.delete()
     return arms(request)
 
-def actualizar(request,id):
+def actualizar_arma(request,id):
     caball=arma.objects.get(id=id)
     form=formArma(instance=caball)
     if request.method=='POST':
@@ -74,12 +71,9 @@ def actualizar(request,id):
             form.save()
             return redirect('/arma')
     data={'form':form}
-    return render (request,'agregar.html',data)
+    return render (request,'agregar_arma.html',data)
 
 #Caballo
-
-def index(request):
-    return render(request,'index.html')
 
 def caballos(request):
     form=caballo.objects.all()
@@ -96,12 +90,12 @@ def agregarcaballos(request):
     data = {'form': form}
     return render(request, 'agregarcaballo.html', data)
     
-def eliminar(request,id):
+def eliminar_caballo(request,id):
     form=caballo.objects.get(id=id)
     form.delete()
     return caballos(request)
 
-def actualizar(request,id):
+def actualizar_caballo(request,id):
     caball=caballo.objects.get(id=id)
     form=formcaballo(instance=caball)
     if request.method=='POST':

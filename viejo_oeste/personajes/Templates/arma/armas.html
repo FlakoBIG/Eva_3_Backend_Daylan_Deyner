@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width= , initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'CSS/armas.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div>🔫 Listado de armas 🔫</div>
+    {%if armas%}
+    <table>
+        <thead>
+            <tr>
+                <th>NOMBRE</th>
+                <th>CANTIDAD DE BALAS</th>
+                <th>TIPO DE BALA</th>
+                <th>TIPO DE ARMA</th>
+                <th>CADENCIA</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for arm in armas%}
+            <tr>
+                <td>{{arm.nombre}}</td>
+                <td>{{arm.cantidad_balas}}</td>
+                <td>{{arm.tipo_bala}}</td>
+                <td>{{arm.tipo_arma}}</td>
+                <td>{{arm.cadencia}}</td>
+                <td>
+                    <a href="/actualizar_arma/{{arm.id}}">Actualizar</a>
+                    <a href="/eliminar_arma/{{arm.id}}" onclick="return confirm('☠️☠️☠️ desea aliminar el arma? ☠️☠️☠️')">Eliminar</a>
+                </td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    {%else%}
+    <div>
+        <strong>AQUI NO HAY NADA 👀👀👀👀</strong>
+    </div>
+    {%endif%}
+    <div>
+        <a href="../">Volver</a>
+        <a href="/agregar_arma">Agregar Armas 🔫</a>
+        <a href="/admin">Admin</a>
+    </div>
+    {{form.as_list}}
+    {%csrf_token%}
+</body>
+</html>

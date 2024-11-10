@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'CSS/estiloso.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div>LISTADO DE CABALLOS</div>
+    {%if caballos%}
+    <table>
+        <thead>
+            <tr>
+                <th>NOMBRE</th>
+                <th>RAZA</th>
+                <th>COLOR</th>
+                <th>VELOCIDAD</th>
+                <th>RESISTENCIA</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for cab in caballos%}
+            <tr>
+                <td>{{cab.nombre}}</td>
+                <td>{{cab.raza}}</td>
+                <td>{{cab.color}}</td>
+                <td>{{cab.velocidad}}</td>
+                <td>{{cab.resistencia}}</td>
+                <td>
+                    <a href="/actualizar_caballo/{{cab.id}}">ACTUALIZAR</a>
+                    <a href="/eliminar_caballo/{{cab.id}}" onclick="return confirm('Desea eliminar al caballo?');">ELIMINAR</a>
+        
+                </td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    {%else%}
+    <div>
+        <strong>aqui no hay ningun caballo</strong>
+    </div>
+    {%endif%}
+    <div>
+        <a href="../">Volver</a>
+        <a href="/agregar_caballo">Agregar Caballo</a>
+        <a href="/admin">Admin</a>
+    </div>
+    {{form.as_list}}
+    {%csrf_token%}
+</body>
+</html>
