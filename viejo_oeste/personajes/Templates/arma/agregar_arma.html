@@ -8,9 +8,9 @@
     <title>Registrar Arma</title>
 </head>
 <body>
-    <form method="post" action="">
+    <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{form.as_p}}
         <input type="submit" value="Registrar Arma">
         <a href="/arma">Volver a Armas</a>
     </form>

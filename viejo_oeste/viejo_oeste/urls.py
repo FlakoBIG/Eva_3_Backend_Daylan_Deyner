@@ -22,17 +22,17 @@ urlpatterns = [
     path('', views.index),
     path('agregar/', views.agregar_vaquero),
     path('lista/', views.lista_vaquero),
-    path('eliminar/<int:id>', views.eliminar),
-    path('actualizar/<int:id>', views.actualizar),
+    path('eliminar/<int:id>', views.eliminar_vaquero),
+    path('actualizar/<int:id>', views.actualizar_vaquero),
     path('prueba/>', views.prueba),
 
-    path('caballosos/',views.caballos),
-    path('agregar_caballo/',views.agregarcaballos),
+    path('caballosos/',views.lista_caballos),
+    path('agregar_caballo/',views.agregar_caballo),
     path('eliminar_caballo/<int:id>',views.eliminar_caballo),
     path('actualizar_caballo/<int:id>',views.actualizar_caballo),
 
-    path('arma/', views.arms),
-    path('agregar_arma/', views.agregararma),
+    path('arma/', views.lista_armas),
+    path('agregar_arma/', views.agregar_arma),
     path('eliminar_arma/<int:id>', views.eliminar_arma),
     path('actualizar_arma/<int:id>', views.actualizar_arma),
 ]

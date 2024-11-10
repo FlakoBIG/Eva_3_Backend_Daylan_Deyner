@@ -57,7 +57,7 @@ ROOT_URLCONF = 'viejo_oeste.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'Templates')],
+        'DIRS': [os.path.join(BASE_DIR,'Templates','caballo','arma')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'viejo_oeste.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'viejo_oeste',
+        'NAME': 'vaquero',
         'USER':'root',
         'PASSWORD':'',
     }
