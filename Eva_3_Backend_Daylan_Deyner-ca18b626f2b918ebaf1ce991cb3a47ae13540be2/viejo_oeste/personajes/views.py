@@ -72,7 +72,7 @@ def eliminar_arma(request, id):
         messages.success(request, 'Arma eliminada exitosamente.')
     except Exception as e:
         messages.error(request, f'Error al eliminar el arma: {str(e)}')
-    return redirect('lista_armas')
+    return redirect('/arma')
 
 def actualizar_arma(request, id):
     arma2 = get_object_or_404(arma, id=id)
@@ -81,7 +81,7 @@ def actualizar_arma(request, id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Arma actualizada exitosamente.')
-            return redirect('lista_armas')
+            return redirect('/arma')
         messages.error(request, 'Por favor corrija los errores en el formulario.')
     else:
         form = formArma(instance=arma2)
