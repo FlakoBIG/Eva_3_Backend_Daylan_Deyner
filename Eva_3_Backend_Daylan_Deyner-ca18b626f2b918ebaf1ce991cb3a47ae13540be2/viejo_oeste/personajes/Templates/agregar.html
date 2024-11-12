@@ -1,32 +1,127 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Vaquero</title>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/Estilo.css' %}">
 </head>
+<body class="container my-5">
+    <h1 class="mb-4 text-center">Registrar Vaquero</h1>
 
-<body class="container text-center my-5">
-    <h1 class="mb-4">Agregar Vaquero</h1>
+    <div class="contenedor-estilo">
+        <form method="post" class="row g-3">
+            {% csrf_token %}
 
-    <form method="post" class="mb-4 text-start mx-auto" style="max-width: 600px;">
-        {% csrf_token %}
-        {{ form.as_p }}
-
-        <!-- Espacio para los botones de enviar y navegación -->
-        <div class="d-flex justify-content-between mt-4">
-            <button type="submit" class="btn btn-danger">Agregar</button>
-            <div>
-                <a href="/lista" class="btn btn-secondary ms-2">Lista de Vaqueros</a>
+            <!-- Campo Nombre -->
+            <div class="col-12">
+                <label for="id_nombre" class="form-label">Nombre</label>
+                {{ form.nombre }}
+                {% if form.nombre.errors %}
+                    <div class="text-danger">
+                        <strong>{{ form.nombre.errors|join:", " }}</strong>
+                    </div>
+                {% endif %}
             </div>
-        </div>
-    </form>
+
+            <!-- Campo Apellido -->
+            <div class="col-12">
+                <label for="id_apellido" class="form-label">Apellido</label>
+                {{ form.apellido }}
+                {% if form.apellido.errors %}
+                    <div class="text-danger">
+                        <strong>{{ form.apellido.errors|join:", " }}</strong>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Campo Edad -->
+            <div class="col-12">
+                <label for="id_edad" class="form-label">Edad</label>
+                {{ form.edad }}
+                {% if form.edad.errors %}
+                    <div class="text-danger">
+                        <strong>{{ form.edad.errors|join:", " }}</strong>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Campo Sexo -->
+            <div class="col-12">
+                <label for="id_sexo" class="form-label">Sexo</label>
+                {{ form.sexo }}
+                {% if form.sexo.errors %}
+                    <div class="text-danger">
+                        <strong>{{ form.sexo.errors|join:", " }}</strong>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Campo Buscado -->
+            <div class="col-12">
+                <label for="id_buscado" class="form-label">¿Buscado?</label>
+                {{ form.buscado }}
+            </div>
+
+            <!-- Sección de Caballo -->
+            <div class="col-12">
+                <label for="id_nuevo_caballo" class="form-label">{{ form.nuevo_caballo }} ¿Agregar nuevo caballo?</label>
+            </div>
+            <div class="col-12 caballo-section" style="display:none;">
+                {{ form.nuevo_caballo_nombre.label_tag }} {{ form.nuevo_caballo_nombre }}
+                {{ form.nuevo_caballo_raza.label_tag }} {{ form.nuevo_caballo_raza }}
+                {{ form.nuevo_caballo_color.label_tag }} {{ form.nuevo_caballo_color }}
+                {{ form.nuevo_caballo_velocidad.label_tag }} {{ form.nuevo_caballo_velocidad }}
+                {{ form.nuevo_caballo_resistencia.label_tag }} {{ form.nuevo_caballo_resistencia }}
+            </div>
+
+            <!-- Sección de Arma -->
+            <div class="col-12">
+                <label for="id_nueva_arma" class="form-label">{{ form.nueva_arma }} ¿Agregar nueva arma?</label>
+            </div>
+            <div class="col-12 arma-section" style="display:none;">
+                {{ form.nueva_arma_nombre.label_tag }} {{ form.nueva_arma_nombre }}
+                {{ form.nueva_arma_cantidad_balas.label_tag }} {{ form.nueva_arma_cantidad_balas }}
+                {{ form.nueva_arma_tipo_bala.label_tag }} {{ form.nueva_arma_tipo_bala }}
+                {{ form.nueva_arma_tipo_arma.label_tag }} {{ form.nueva_arma_tipo_arma }}
+                {{ form.nueva_arma_cadencia.label_tag }} {{ form.nueva_arma_cadencia }}
+            </div>
+
+            <!-- Botones -->
+            <div class="col-12 d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Registrar Vaquero</button>
+                <a href="/lista" class="btn btn-secondary">Lista de Vaqueros</a>
+                <a href="../" class="btn btn-danger">Volver</a>
+            </div>
+        </form>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const nuevoCaballoCheckbox = document.getElementById("id_nuevo_caballo");
+            const nuevaArmaCheckbox = document.getElementById("id_nueva_arma");
+
+            const caballoSection = document.querySelector(".caballo-section");
+            const armaSection = document.querySelector(".arma-section");
+
+            // Función para mostrar/ocultar secciones
+            function toggleSection(checkbox, section) {
+                section.style.display = checkbox.checked ? "block" : "none";
+            }
+
+            // Mostrar/ocultar según el estado inicial
+            toggleSection(nuevoCaballoCheckbox, caballoSection);
+            toggleSection(nuevaArmaCheckbox, armaSection);
+
+            // Event listeners para cambiar estado
+            nuevoCaballoCheckbox.addEventListener("change", () => toggleSection(nuevoCaballoCheckbox, caballoSection));
+            nuevaArmaCheckbox.addEventListener("change", () => toggleSection(nuevaArmaCheckbox, armaSection));
+        });
+    </script>
 </body>
 </html>

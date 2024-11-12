@@ -16,13 +16,6 @@ class caballo(models.Model):
     # Relación OneToOne con vaquero, y si el vaquero se elimina, también se elimina el caballo
     vaquero = models.ForeignKey('vaquero', on_delete=models.CASCADE, null=True, blank=True, related_name='caballos')
 
-    def clean(self):
-        if self.vaquero:
-            # Verificamos que el vaquero no tenga otro caballo asignado
-            existing_caballo = caballo.objects.filter(vaquero=self.vaquero).exclude(id=self.id).first()
-            if existing_caballo:
-                raise ValidationError({'vaquero': f'Este vaquero ya tiene asignado el caballo: {existing_caballo.nombre}'})
-
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
@@ -32,7 +25,7 @@ class caballo(models.Model):
 
 class arma(models.Model):
     nombre = models.CharField(max_length=50)
-    cantidad_balas = models.IntegerField(default=20, help_text="El número no debe ser menor a 20 balas")
+    cantidad_balas = models.IntegerField(default=1, help_text="El número no debe ser menor a 1 balas")
     
     TipoBala = [
         ('9mm', '9mm'),
@@ -57,13 +50,6 @@ class arma(models.Model):
 
     # Relación OneToOne con vaquero, y si el vaquero se elimina, también se elimina el arma
     vaquero = models.ForeignKey('vaquero', on_delete=models.CASCADE, null=True, blank=True, related_name='armas')
-
-    def clean(self):
-        if self.vaquero:
-            # Verificamos que el vaquero no tenga otra arma asignada
-            existing_arma = arma.objects.filter(vaquero=self.vaquero).exclude(id=self.id).first()
-            if existing_arma:
-                raise ValidationError({'vaquero': f'Este vaquero ya tiene asignada el arma: {existing_arma.nombre}'})
 
     def save(self, *args, **kwargs):
         self.full_clean()

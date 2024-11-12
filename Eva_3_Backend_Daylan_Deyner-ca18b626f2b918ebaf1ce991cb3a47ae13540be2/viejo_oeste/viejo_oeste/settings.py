@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'viejo_oeste.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'vaquero',
+        'NAME': 'Viejo_oeste',
         'USER':'root',
         'PASSWORD':'',
     }

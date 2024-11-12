@@ -48,7 +48,7 @@ def actualizar_vaquero(request, id):
         form = Formvaquero(instance=vaqueroe)
     return render(request, 'modificar.html', {'form': form})
 
-# Arma (Weapon) views
+# Arma  views
 def lista_armas(request):
     armas = arma.objects.all()
     return render(request, 'arma/armas.html', {'armas': armas})
@@ -85,11 +85,11 @@ def actualizar_arma(request, id):
         messages.error(request, 'Por favor corrija los errores en el formulario.')
     else:
         form = formArma(instance=arma2)
-    return render(request, 'arma/agregar_arma.html', {'form': form})
+    return render(request, 'arma/actualizararma.html', {'form': form})
 
 
 
-# Caballo (Horse) views
+# Caballo views
 def lista_caballos(request):
     caballos = caballo.objects.all()
     return render(request, 'caballo/caballos.html', {'caballos': caballos})
@@ -126,4 +126,4 @@ def actualizar_caballo(request, id):
         messages.error(request, 'Por favor corrija los errores en el formulario.')
     else:
         form = formcaballo(instance=caballoe)
-    return render(request, 'caballo/agregarcaballo.html', {'form': form})
+    return render(request, 'caballo/modificarcaballo.html', {'form': form})
