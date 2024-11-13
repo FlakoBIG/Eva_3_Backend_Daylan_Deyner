@@ -20,6 +20,32 @@ class formcaballo(forms.ModelForm):
         self.fields['vaquero'].queryset = vaquero.objects.all()
         self.fields['vaquero'].empty_label = "Seleccione un vaquero (opcional)"
 
+    # Validación personalizada
+    def clean_nombre(self):
+        nombre = self.cleaned_data.get('nombre')
+        if not nombre:
+            raise ValidationError('El nombre del caballo es obligatorio.')
+
+        # Validar que el nombre empiece con mayúscula y contenga solo letras
+        if not nombre[0].isupper():
+            raise ValidationError('El nombre debe comenzar con una letra mayuscula.')
+        if not nombre.isalpha():
+            raise ValidationError('El nombre solo puede contener letras.')
+        return nombre
+    def clean_raza(self):
+        raza = self.cleaned_data.get('raza')
+        if not raza:
+            raise ValidationError('La raza del caballo es obligatoria.')
+        if not raza[0].isupper():
+            raise ValidationError('La raza debe comenzar con una letra mayuscula.')
+        # Validar que la raza solo contenga letras (sin números ni caracteres especiales)
+        if not raza.isalpha():
+            raise ValidationError('La raza solo puede contener letras.')
+
+        return raza
+    
+   
+
 class formArma(forms.ModelForm):
     class Meta:
         model = arma
@@ -38,6 +64,29 @@ class formArma(forms.ModelForm):
         self.fields['vaquero'].queryset = vaquero.objects.all()
         self.fields['vaquero'].empty_label = "Seleccione un vaquero (opcional)"
 
+    def clean_nombre(self):
+        nombre = self.cleaned_data.get('nombre')
+        if not nombre:
+            raise ValidationError('El nombre es obligatorio.')
+        if not nombre.isalpha():
+            raise ValidationError('El nombre solo puede contener letras.')
+        if not nombre[0].isupper():
+            raise ValidationError('El nombre debe comenzar con una letra mayúscula.')
+
+        return nombre
+
+    # Validación personalizada para la cantidad de balas
+    def clean_cantidad_balas(self):
+        cantidad_balas = self.cleaned_data.get('cantidad_balas')   
+        # Validar que la cantidad de balas sea mayor que 0
+        if cantidad_balas is None or cantidad_balas <= 0:
+            raise ValidationError('La cantidad de balas debe ser mayor a cero.')
+        return cantidad_balas
+
+from django import forms
+from django.core.exceptions import ValidationError
+from .models import vaquero, caballo, arma
+
 class Formvaquero(forms.ModelForm):
     # Campos para el vaquero
     class Meta:
@@ -51,7 +100,7 @@ class Formvaquero(forms.ModelForm):
             'sexo': forms.Select(attrs={'class': 'form-control'}),
         }
 
-    # Campos para el caballo
+    # Campos adicionales para el caballo
     nuevo_caballo = forms.BooleanField(
         required=False, 
         label="¿Agregar nuevo caballo?",
@@ -80,7 +129,7 @@ class Formvaquero(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form-control', 'id': 'nuevo_caballo_resistencia'})
     )
 
-    # Campos para el arma
+    # Campos adicionales para el arma
     nueva_arma = forms.BooleanField(
         required=False,
         label="¿Agregar nueva arma?",
@@ -114,7 +163,7 @@ class Formvaquero(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         
-        # Validar datos del caballo si se marca la opción
+        # Validación de datos del caballo si se marca la opción
         if cleaned_data.get('nuevo_caballo'):
             required_fields = [
                 'nuevo_caballo_nombre',
@@ -127,7 +176,15 @@ class Formvaquero(forms.ModelForm):
                 if not cleaned_data.get(field):
                     self.add_error(field, 'Este campo es requerido si agregas un nuevo caballo')
 
-        # Validar datos del arma si se marca la opción
+            # Validación del nombre del caballo
+            nombre_caballo = cleaned_data.get('nuevo_caballo_nombre')
+            if nombre_caballo:
+                if not nombre_caballo[0].isupper():
+                    self.add_error('nuevo_caballo_nombre', 'El nombre del caballo debe comenzar con una letra mayúscula.')
+                if not nombre_caballo.isalpha():
+                    self.add_error('nuevo_caballo_nombre', 'El nombre del caballo solo puede contener letras.')
+
+        # Validación de datos del arma si se marca la opción
         if cleaned_data.get('nueva_arma'):
             required_fields = [
                 'nueva_arma_nombre',
@@ -139,6 +196,16 @@ class Formvaquero(forms.ModelForm):
             for field in required_fields:
                 if not cleaned_data.get(field):
                     self.add_error(field, 'Este campo es requerido si agregas una nueva arma')
+
+            # Validación del nombre del arma
+            nombre_arma = cleaned_data.get('nueva_arma_nombre')
+            if nombre_arma and not nombre_arma[0].isupper():
+                self.add_error('nueva_arma_nombre', 'El nombre del arma debe comenzar con una letra mayúscula.')
+
+            # Validación de la cantidad de balas
+            cantidad_balas = cleaned_data.get('nueva_arma_cantidad_balas')
+            if cantidad_balas is not None and cantidad_balas < 20:
+                self.add_error('nueva_arma_cantidad_balas', 'La cantidad de balas debe ser al menos 20.')
 
         return cleaned_data
 
@@ -171,7 +238,6 @@ class Formvaquero(forms.ModelForm):
                 )
 
         return vaquero_instance
-
     # Campos para el vaquero
     class Meta:
         model = vaquero
@@ -243,6 +309,32 @@ class Formvaquero(forms.ModelForm):
         required=False,
         widget=forms.Select(attrs={'class': 'form-control'})
     )
+
+    def clean_nombre(self):
+        nombre = self.cleaned_data.get('nombre')
+        if not nombre.isalpha() or len(nombre) > 50:
+            raise ValidationError('El nombre del vaquero debe contener solo letras y tener un máximo de 50 caracteres.')
+        
+        return nombre
+
+    def clean_nuevo_caballo_nombre(self):
+        nombre = self.cleaned_data.get('nuevo_caballo_nombre')
+        if nombre and (not nombre.isalpha() or len(nombre) > 50):
+            raise ValidationError('El nombre del caballo debe contener solo letras y tener un máximo de 50 caracteres.')
+        
+        return nombre
+
+    def clean_nueva_arma_nombre(self):
+        nombre = self.cleaned_data.get('nueva_arma_nombre')
+        if nombre and (not nombre.isalpha() or len(nombre) > 50):
+            raise ValidationError('El nombre del arma debe contener solo letras y tener un máximo de 50 caracteres.')
+        return nombre
+
+    def clean_nueva_arma_cantidad_balas(self):
+        cantidad_balas = self.cleaned_data.get('nueva_arma_cantidad_balas')
+        if cantidad_balas and cantidad_balas < 20:
+            raise ValidationError('La cantidad de balas debe ser al menos 20.')
+        return cantidad_balas
 
     def clean(self):
         cleaned_data = super().clean()
