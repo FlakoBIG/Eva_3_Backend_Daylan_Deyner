@@ -1,0 +1,190 @@
+/* estilo global */
+body {
+    background: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+    font-family: 'Courier New', Courier, monospace;
+    color: #4B3621;
+    margin: 0;
+    padding: 0;
+}
+
+/* diseño de las letras */
+h1 {
+    color: #8B4513;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px;
+    font-family: 'Georgia', serif;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+    border-bottom: 4px solid #D2691E;
+    padding-bottom: 10px;
+}
+
+/* contenedor del formulario */
+.contenedor-estilo {
+    background-color: rgba(229, 229, 229, 0.8);
+    padding: 30px;
+    border-radius: 10px;
+    border: 2px solid #8B4513;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    margin: 20px auto;
+    background-image: url('https://www.transparenttextures.com/patterns/brick-wall.png');
+}
+
+/* estilo para los botones */
+.btn-western {
+    background-color: #8B4513;
+    color: #F4A460;
+    border: 2px solid #D2691E;
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: 'Georgia', serif;
+    display: inline-block;
+}
+
+.btn-western:hover {
+    background-color: #D2691E;
+    color: #FFE4B5;
+    transform: translateY(-3px);
+}
+
+/* estilo para campos de entrada */
+input[type="text"],
+input[type="number"],
+select {
+    padding: 12px;
+    border: 2px solid #8B4513;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+    background-color: #FFF8DC;
+    color: #4B3621;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+    border-color: #D2691E;
+}
+
+/* diseño de las etiquetas */
+label {
+    font-weight: bold;
+    color: #8B4513;
+    font-size: 18px;
+}
+
+/* estilo para mensajes de error */
+.text-danger {
+    color: #FF6347;
+    font-size: 14px;
+    font-style: italic;
+}
+
+/* estilo de la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #FFF8DC;
+}
+
+thead {
+    background-color: #8B4513;
+    color: #FFF8DC;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #D2691E;
+}
+
+th {
+    font-weight: bold;
+}
+
+tbody tr:hover {
+    background-color: #F4A460;
+    color: #4B3621;
+}
+
+/* estilo para los enlaces */
+a {
+    color: #8B4513;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #D2691E;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* estilo para el elemento select */
+select {
+    padding: 10px;
+    border: 2px solid #8B4513;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #FFF8DC;
+    color: #4B3621;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('https://www.svgrepo.com/show/20880/down-arrow.svg');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    transition: border-color 0.3s ease;
+    width: 100%;
+}
+
+select:hover {
+    border-color: #D2691E;
+    background-color: #FFE4B5;
+}
+
+select:focus {
+    outline: none;
+    border-color: #D2691E;
+    box-shadow: 0 0 5px rgba(210, 105, 30, 0.5);
+}
+
+select option {
+    background-color: #FFF8DC;
+    color: #4B3621;
+}
+
+/* estilo para el checkbox */
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #8B4513;
+    border: 2px solid #8B4513;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+}
+
+input[type="checkbox"]:hover {
+    border-color: #D2691E;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #8B4513;
+    color: #FFF8DC;
+}

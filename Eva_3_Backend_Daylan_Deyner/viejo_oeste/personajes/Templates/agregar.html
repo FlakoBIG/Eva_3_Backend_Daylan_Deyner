@@ -1,0 +1,81 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Vaquero</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/Estilo.css' %}">
+</head>
+<body class="container my-5">
+    <h1 class="mb-4 text-center">Registrar Vaquero</h1>
+
+    <div class="contenedor-estilo">
+        <form method="post" class="row g-3">
+            {% csrf_token %}
+
+            <!-- Campo Nombre -->
+            <div class="col-12">
+                <label for="id_nombre" class="form-label">Nombre</label>
+                {{ form.nombre }}
+                {% if form.nombre.errors %}
+                    <div class="text-danger">
+                        <strong>{{ form.nombre.errors|join:", " }}</strong>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Campo Apellido -->
+            <div class="col-12">
+                <label for="id_apellido" class="form-label">Apellido</label>
+                {{ form.apellido }}
+                {% if form.apellido.errors %}
+                    <div class="text-danger">
+                        <strong>{{ form.apellido.errors|join:", " }}</strong>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Campo Edad -->
+            <div class="col-12">
+                <label for="id_edad" class="form-label">Edad</label>
+                {{ form.edad }}
+                {% if form.edad.errors %}
+                    <div class="text-danger">
+                        <strong>{{ form.edad.errors|join:", " }}</strong>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Campo Sexo -->
+            <div class="col-12">
+                <label for="id_sexo" class="form-label">Sexo</label>
+                {{ form.sexo }}
+                {% if form.sexo.errors %}
+                    <div class="text-danger">
+                        <strong>{{ form.sexo.errors|join:", " }}</strong>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Campo Buscado -->
+            <div class="col-12">
+                <label for="id_buscado" class="form-label">¿Buscado?</label>
+                {{ form.buscado }}
+            </div>
+
+
+            <!-- Botones -->
+            <div class="col-12 d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Registrar Vaquero</button>
+                <a href="/lista" class="btn btn-secondary">Lista de Vaqueros</a>
+                <a href="../" class="btn btn-danger">Volver</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
