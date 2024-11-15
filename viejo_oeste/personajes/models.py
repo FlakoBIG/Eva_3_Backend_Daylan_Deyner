@@ -154,7 +154,7 @@ class vaquero(models.Model):
             apellido=self.apellido,
             edad=self.edad,
             sexo=self.sexo).exclude(id=self.id).exists():
-            raise ValidationError("Ya existe un vaquero con el mismo nombre, apellido, edad y sexo.")
+            raise ValidationError({'nombre':'Ya existe un vaquero con el mismo nombre, apellido, edad y sexo.'})
         
 
         
