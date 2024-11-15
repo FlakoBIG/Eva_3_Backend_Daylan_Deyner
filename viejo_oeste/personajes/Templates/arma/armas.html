@@ -1,0 +1,100 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Armas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/Estilo.css' %}">
+</head>
+<body class="container text-center my-5">
+    <h1 class="mb-4">🔫 Listado de Armas 🔫</h1>
+
+    <div class="contenedor-estilo">
+        {% if armas %}
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>NOMBRE</th>
+                    <th>CANTIDAD DE MUNICIÓN</th>
+                    <th>TIPO DE BALA</th>
+                    <th>TIPO DE ARMA</th>
+                    <th>CADENCIA</th>
+                    <th>VAQUERO</th>  
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for arm in armas %}
+                <tr>
+                    <td>{{ arm.nombre }}</td>
+                    <td>{{ arm.cantidad_balas }}</td>
+                    <td>{{ arm.tipo_bala }}</td>
+                    <td>{{ arm.tipo_arma }}</td>
+                    <td>{{ arm.cadencia }}</td>
+                    <td>
+                        {% if arm.vaquero.nombre %}
+                            {{ arm.vaquero.nombre }}
+                        {% else %}
+                            No le pertenece a nadie
+                        {% endif %}
+                    </td> 
+                    <td>
+                        <a href="/actualizar_arma/{{ arm.id }}" class="btn btn-warning btn-sm">Actualizar</a>
+                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-delete-url="/eliminar_arma/{{ arm.id }}">Eliminar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-warning" role="alert">
+            <strong>AQUI NO HAY NADA 👀👀👀👀</strong>
+        </div>
+        {% endif %}
+
+        <div class="botones mt-3">
+            <a href="../" class="btn btn-secondary">Volver</a>
+            <a href="/agregar_arma" class="btn btn-success">Agregar Armas 🔫</a>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+        </form>
+    </div>
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content text-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminacion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Seguro de eliminar el Arma?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <!-- Enlace que cambiara dinamicamente la URL para la eliminacion -->
+                    <a id="btn_confirmar" href="#" class="btn btn-danger">Eliminar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const deleteModal = document.getElementById('confirmDeleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget; // Boton que activo el modal
+            const deleteUrl = button.getAttribute('data-delete-url'); // URL de eliminacion
+            const confirmDeleteBtn = document.getElementById('btn_confirmar');
+            confirmDeleteBtn.href = deleteUrl; // Asignar la URL al boton de confirmar
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
